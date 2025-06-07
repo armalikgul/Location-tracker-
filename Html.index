@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Location Tracker</title>
+  </head>
+  <body>
+    <h2>Click the button to share your location</h2>
+    <button onclick="getLocation()">Share Location</button>
+
+    <script>
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(sendLocation);
+        } else {
+          alert("Geolocation not supported by your browser.");
+        }
+      }
+
+      function sendLocation(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        // 🔧 Replace this with your own server URL or webhook
+        fetch("https://webhook.site/your-custom-url", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ latitude, longitude })
+        });
+
+        alert("Location sent. Thank you!");
+      }
+    </script>
+  </body>
+</html>
